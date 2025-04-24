@@ -33,7 +33,7 @@ $batSource = "C:\Users\$env:USERNAME\Downloads\@ESDC_Boot_V3.bat"
 $batDest = "C:\Users\skype\Documents\@ESDC_Boot_V3.bat"
 $xmlSchedulerFile = "C:\Users\$env:USERNAME\Downloads\Run_bin_file_scheduler.xml"
 $vmDefaultConfig = "C:\Users\Admin\Downloads\VoiceMeeterBananaDefault.xml"
-$vmDestConfig = "C:\Users\skype\AppData\Roaming\"
+$vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
 
 
 #-----------------------------------------------------------------
