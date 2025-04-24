@@ -23,7 +23,7 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 #-----------------------------------------------------------------
 
 
-# Variables
+# Variables File 
 $zipURL = "https://download.vb-audio.com/Download_CABLE/VoicemeeterSetup_v2119.zip"
 $zipPath = "C:\Users\$env:USERNAME\Downloads\VoicemeeterSetup.zip"
 $extractPath = "C:\Users\$env:USERNAME\Downloads\VoicemeeterSetup"
@@ -33,12 +33,10 @@ $batSource = "C:\Users\$env:USERNAME\Downloads\@ESDC_Boot_V3.bat"
 $batDest = "C:\Users\skype\Documents\@ESDC_Boot_V3.bat"
 $xmlSchedulerFile = "C:\Users\$env:USERNAME\Downloads\Run_bin_file_scheduler.xml"
 $vmDefaultConfig = "C:\Users\Admin\Downloads\VoiceMeeterBananaDefault.xml"
-$vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
+$vmDestConfig = "C:\Users\skype\AppData\Roaming\"
 
 
 #-----------------------------------------------------------------
-
-
 # Get file from Gihub
 $githubURL = "https://github.com/Plangloi/ESDC/"
 $githubFile_ESDC_Boot_V3 = "https://github.com/Plangloi/ESDC/blob/main/%40ESDC_Boot_V3.bat"
@@ -72,11 +70,13 @@ if (-Not (Test-Path $vmDefaultConfig)) {
 
 
 
+#------------------Move Files-------------------------
+# Step Copy configuration files
+Copy-Item -Path $batSource -Destination $batDest -Force
+Copy-Item -Path $vmDefaultConfig -Destination $vmDestConfig -Force
 #-----------------------------------------------------------------
 
-
-
-# Download Voicemeeter zip if it doesn't exist
+# Step 1: Download Voicemeeter zip if it doesn't exist
 # Check if the zip file already exists
 if (-Not (Test-Path $zipPath))
     {
@@ -120,9 +120,7 @@ if (Test-Path $extractPath)
         
     }
 
-    
-#-----------------------Install Voicemeeter---------------------------------
-
+#-----------------------Install---------------------------------
 
 # Step 3.1: Check if Voicemeeter is already installed
 $voicemeeterInstalled = Get-ChildItem "C:\Program Files (x86)\VB\Voicemeeter" -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq "Voicemeeter.exe" }
