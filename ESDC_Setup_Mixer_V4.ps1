@@ -32,7 +32,7 @@ $installerExe = "C:\Users\$env:USERNAME\Downloads\VoicemeeterSetup\voicemeeterpr
 $batSource = "C:\Users\$env:USERNAME\Downloads\@ESDC_Boot_V3.bat"
 $batDest = "C:\Users\skype\Documents\@ESDC_Boot_V3.bat"
 $xmlSchedulerFile = "C:\Users\$env:USERNAME\Downloads\Run_bin_file_scheduler.xml"
-$vmDefaultConfig = "C:\Users\Admin\Downloads\VoiceMeeterBananaDefault.xml"
+$vmDefaultConfig = "C:\Users\$env:USERNAME\Downloads\VoiceMeeterBananaDefault.xml"
 $vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
 
 
