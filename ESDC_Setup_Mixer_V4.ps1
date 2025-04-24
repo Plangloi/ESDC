@@ -35,14 +35,48 @@ $xmlSchedulerFile = "C:\Users\$env:USERNAME\Downloads\Run_bin_file_scheduler.xml
 $vmDefaultConfig = "C:\Users\Admin\Downloads\VoiceMeeterBananaDefault.xml"
 $vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
 
-#-----------------------------------------------------------------
-# Step Copy configuration files
-Copy-Item -Path $batSource -Destination $batDest -Force
-Copy-Item -Path $vmDefaultConfig -Destination $vmDestConfig -Force
 
 #-----------------------------------------------------------------
 
-# Step 1: Download Voicemeeter zip if it doesn't exist
+
+# Get file from Gihub
+$githubURL = "https://github.com/Plangloi/ESDC/"
+$githubFile_ESDC_Boot_V3 = "https://github.com/Plangloi/ESDC/blob/main/%40ESDC_Boot_V3.bat"
+$githubFile_Run_bin_file_scheduler = "https://github.com/Plangloi/ESDC/blob/main/Run_bin_file_scheduler.xml"
+$githubFile_VoiceMeeterBananaDefault = "https://github.com/Plangloi/ESDC/blob/main/VoiceMeeterBananaDefault.xml"
+
+#download the files from GitHub if they don't exist:
+# Check if the batch file already exists
+if (-Not (Test-Path $batSource)) {
+    Write-Host "Downloading @ESDC_Boot_V3.bat from GitHub..."
+    Invoke-WebRequest -Uri $githubFile_ESDC_Boot_V3 -OutFile $batSource
+} else {
+    Write-Host "@ESDC_Boot_V3.bat already exists. Skipping download."
+}
+
+# Check if the XML file already exists
+if (-Not (Test-Path $xmlSchedulerFile)) {
+    Write-Host "Downloading Run_bin_file_scheduler.xml from GitHub..."
+    Invoke-WebRequest -Uri $githubFile_Run_bin_file_scheduler -OutFile $xmlSchedulerFile
+} else {
+    Write-Host "Run_bin_file_scheduler.xml already exists. Skipping download."
+}
+
+# Check if the XML file already exists
+if (-Not (Test-Path $vmDefaultConfig)) {
+    Write-Host "Downloading VoiceMeeterBananaDefault.xml from GitHub..."
+    Invoke-WebRequest -Uri $githubFile_VoiceMeeterBananaDefault -OutFile $vmDefaultConfig
+} else {
+    Write-Host "VoiceMeeterBananaDefault.xml already exists. Skipping download."
+}
+
+
+
+#-----------------------------------------------------------------
+
+
+
+# Download Voicemeeter zip if it doesn't exist
 # Check if the zip file already exists
 if (-Not (Test-Path $zipPath))
     {
@@ -86,7 +120,9 @@ if (Test-Path $extractPath)
         
     }
 
-#-----------------------Install---------------------------------
+    
+#-----------------------Install Voicemeeter---------------------------------
+
 
 # Step 3.1: Check if Voicemeeter is already installed
 $voicemeeterInstalled = Get-ChildItem "C:\Program Files (x86)\VB\Voicemeeter" -ErrorAction SilentlyContinue | Where-Object { $_.Name -eq "Voicemeeter.exe" }
