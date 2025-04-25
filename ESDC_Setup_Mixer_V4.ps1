@@ -37,14 +37,13 @@ $vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
 
 # Get file from Gihub
 $githubURL = "https://github.com/Plangloi/ESDC/"
-$githubFile_ESDC_Boot_V3 = "https://github.com/Plangloi/ESDC/blob/1980fb1ae05807a54f89f3769898e0ca41da0ab6/%40ESDC_Boot_V3.bat"
-$githubFile_Run_bin_file_scheduler = "https://github.com/Plangloi/ESDC/blob/main/Run_bin_file_scheduler.xml"
-$githubFile_VoiceMeeterBananaDefault = "https://github.com/Plangloi/ESDC/blob/main/VoiceMeeterBananaDefault.xml"
+$githubFile_ESDC_Boot_V3 = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/%40ESDC_Boot_V3.bat"
+$githubFile_Run_bin_file_scheduler = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/Run_bin_file_scheduler.xml"
+$githubFile_VoiceMeeterBananaDefault = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/VoiceMeeterBananaDefault.xml"
 
 
 
 #-----------------------------------------------------------------
-
 
 
 
