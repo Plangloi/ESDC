@@ -35,22 +35,31 @@ $xmlSchedulerFile = "C:\Users\$env:USERNAME\Downloads\Run_bin_file_scheduler.xml
 $vmDefaultConfig = "C:\Users\$env:USERNAME\Downloads\VoiceMeeterBananaDefault.xml"
 $vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
 
-
-#-----------------------------------------------------------------
 # Get file from Gihub
 $githubURL = "https://github.com/Plangloi/ESDC/"
-$githubFile_ESDC_Boot_V3 = "https://github.com/Plangloi/ESDC/blob/main/%40ESDC_Boot_V3.bat"
+$githubFile_ESDC_Boot_V3 = "https://github.com/Plangloi/ESDC/blob/1980fb1ae05807a54f89f3769898e0ca41da0ab6/%40ESDC_Boot_V3.bat"
 $githubFile_Run_bin_file_scheduler = "https://github.com/Plangloi/ESDC/blob/main/Run_bin_file_scheduler.xml"
 $githubFile_VoiceMeeterBananaDefault = "https://github.com/Plangloi/ESDC/blob/main/VoiceMeeterBananaDefault.xml"
 
-#download the files from GitHub if they don't exist:
-# Check if the batch file already exists
+
+
+#-----------------------------------------------------------------
+
+
+
+
+#download the files from GitHub if they don't exist 
+
+#Check if the batch file already exists
 if (-Not (Test-Path $batSource)) {
     Write-Host "Downloading @ESDC_Boot_V3.bat from GitHub..."
     Invoke-WebRequest -Uri $githubFile_ESDC_Boot_V3 -OutFile $batSource
 } else {
     Write-Host "@ESDC_Boot_V3.bat already exists. Skipping download."
 }
+
+
+
 
 # Check if the XML file already exists
 if (-Not (Test-Path $xmlSchedulerFile)) {
@@ -60,6 +69,9 @@ if (-Not (Test-Path $xmlSchedulerFile)) {
     Write-Host "Run_bin_file_scheduler.xml already exists. Skipping download."
 }
 
+
+
+
 # Check if the XML file already exists
 if (-Not (Test-Path $vmDefaultConfig)) {
     Write-Host "Downloading VoiceMeeterBananaDefault.xml from GitHub..."
@@ -68,6 +80,15 @@ if (-Not (Test-Path $vmDefaultConfig)) {
     Write-Host "VoiceMeeterBananaDefault.xml already exists. Skipping download."
 }
 
+#-----------------------------------------------------------------
+# Set task scheduler to run the batch file at startup on skype user
+$taskName = "RunVoicemeeterBatchFile"
+$taskAction = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c $batDest"
+$taskTrigger = New-ScheduledTaskTrigger -AtStartup -Execute "@ESDC_Boot_V3.bat" -User "skype"
+$taskTrigger.Enabled = $true
+$taskPrincipal = New-ScheduledTaskPrincipal -UserId "skype" -LogonType Interactive
+$taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+$task = New-ScheduledTask -Action $taskAction -Trigger $taskTrigger -Principal $taskPrincipal -Settings $taskSettings
 
 
 #------------------Move Files-------------------------
@@ -154,8 +175,6 @@ Write-Host "Voicemeeter installation and configuration completed."
 # Ask user if they want to reboot now
 $reboot = Read-Host "Do you want to reboot now? (Y/N)"
 if ($reboot -eq "Y" -or $reboot -eq "y") {
-    Write-Host "Rebooting t -10..."
-    Start-Sleep -Seconds 10
     Restart-Computer -Force
     
 } else {
