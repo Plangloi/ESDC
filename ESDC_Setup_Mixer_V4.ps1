@@ -79,15 +79,15 @@ if (-Not (Test-Path $vmDefaultConfig)) {
     Write-Host "VoiceMeeterBananaDefault.xml already exists. Skipping download."
 }
 
-#-----------------------------------------------------------------
-# Set task scheduler to run the batch file at startup on skype user
-$taskName = "RunVoicemeeterBatchFile"
-$taskAction = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c $batDest"
-$taskTrigger = New-ScheduledTaskTrigger -AtStartup -Execute "@ESDC_Boot_V3.bat" -User "skype"
-$taskTrigger.Enabled = $true
-$taskPrincipal = New-ScheduledTaskPrincipal -UserId "skype" -LogonType Interactive
-$taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
-$task = New-ScheduledTask -Action $taskAction -Trigger $taskTrigger -Principal $taskPrincipal -Settings $taskSettings
+# #-----------------------------------------------------------------
+# # Set task scheduler to run the batch file at startup on skype user
+# $taskName = "RunVoicemeeterBatchFile"
+# $taskAction = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c $batDest"
+# $taskTrigger = New-ScheduledTaskTrigger -AtStartup -Execute "@ESDC_Boot_V3.bat" -User "skype"
+# $taskTrigger.Enabled = $true
+# $taskPrincipal = New-ScheduledTaskPrincipal -UserId "skype" -LogonType Interactive
+# $taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+# $task = New-ScheduledTask -Action $taskAction -Trigger $taskTrigger -Principal $taskPrincipal -Settings $taskSettings
 
 
 #------------------Move Files-------------------------
