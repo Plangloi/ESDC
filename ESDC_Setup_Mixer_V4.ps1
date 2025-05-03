@@ -40,12 +40,12 @@ $githubURL = "https://github.com/Plangloi/ESDC/"
 $githubFile_ESDC_Boot_V3 = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/%40ESDC_Boot_V3.bat"
 $githubFile_Run_bin_file_scheduler = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/Run_bin_file_scheduler.xml"
 $githubFile_VoiceMeeterBananaDefault = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/VoiceMeeterBananaDefault.xml"
+$githubFile_VoiceMeeterBanana_IpEvo = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/VoicemeeterBanana_LastSettings_IPEVO.xml"
+$githubFile_VoiceMeeterBanana_S40 = "https://raw.githubusercontent.com/Plangloi/ESDC/refs/heads/main/VoicemeeterBanana_LastSettings_S40.xml"
 
 
 
 #-----------------------------------------------------------------
-
-
 
 #download the files from GitHub if they don't exist 
 
@@ -59,7 +59,6 @@ if (-Not (Test-Path $batSource)) {
 
 
 
-
 # Check if the XML file already exists
 if (-Not (Test-Path $xmlSchedulerFile)) {
     Write-Host "Downloading Run_bin_file_scheduler.xml from GitHub..."
@@ -70,30 +69,30 @@ if (-Not (Test-Path $xmlSchedulerFile)) {
 
 
 
-
-# Check if the XML file already exists
-if (-Not (Test-Path $vmDefaultConfig)) {
-    Write-Host "Downloading VoiceMeeterBananaDefault.xml from GitHub..."
-    Invoke-WebRequest -Uri $githubFile_VoiceMeeterBananaDefault -OutFile $vmDefaultConfig
+# Check if the VoicemeeterBanana_IpEvo.xml file already exists
+if (-Not (Test-Path $vmDestConfig)) {
+    Write-Host "Downloading VoiceMeeterBanana_IpEvo.xml from GitHub..."
+    Invoke-WebRequest -Uri $githubFile_VoiceMeeterBanana_IpEvo -OutFile $vmDestConfig
 } else {
-    Write-Host "VoiceMeeterBananaDefault.xml already exists. Skipping download."
+    Write-Host "VoiceMeeterBanana_IpEvo.xml already exists. Skipping download."
 }
 
-# #-----------------------------------------------------------------
-# # Set task scheduler to run the batch file at startup on skype user
-# $taskName = "RunVoicemeeterBatchFile"
-# $taskAction = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c $batDest"
-# $taskTrigger = New-ScheduledTaskTrigger -AtStartup -Execute "@ESDC_Boot_V3.bat" -User "skype"
-# $taskTrigger.Enabled = $true
-# $taskPrincipal = New-ScheduledTaskPrincipal -UserId "skype" -LogonType Interactive
-# $taskSettings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
-# $task = New-ScheduledTask -Action $taskAction -Trigger $taskTrigger -Principal $taskPrincipal -Settings $taskSettings
+# Check if the VoicemeeterBanana_S40.xml file already exists
+if (-Not (Test-Path $vmDestConfig)) {
+    Write-Host "Downloading VoiceMeeterBanana_S40.xml from GitHub..."
+    Invoke-WebRequest -Uri $githubFile_VoiceMeeterBanana_S40 -OutFile $vmDestConfig
+} else {
+    Write-Host "VoiceMeeterBanana_S40.xml already exists. Skipping download."
+}
 
 
 #------------------Move Files-------------------------
-# Step Copy configuration files
+# Step Copy configuration files to the user's Documents
 Copy-Item -Path $batSource -Destination $batDest -Force
-Copy-Item -Path $vmDefaultConfig -Destination $vmDestConfig -Force
+
+# copy and change rename to "test123".xml file to the user's Documents
+Copy-Item -Path $xmlSchedulerFile -Destination "C:\Users\skype\Documents\Run_bin_file_scheduler.xml" -Force
+Copy-Item -Path $vmDefaultConfig -Destination "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml" -Force
 #-----------------------------------------------------------------
 
 # Step 1: Download Voicemeeter zip if it doesn't exist
