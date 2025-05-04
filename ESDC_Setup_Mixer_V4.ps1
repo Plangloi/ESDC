@@ -34,8 +34,8 @@ $batDest = "C:\Users\skype\Documents\@ESDC_Boot_V3.bat"
 $xmlSchedulerFile = "C:\Users\$env:USERNAME\Downloads\Run_bin_file_scheduler.xml"
 $vmDefaultConfig = "C:\Users\$env:USERNAME\Downloads\VoiceMeeterBananaDefault.xml"
 $vmDestConfig = "C:\Users\skype\AppData\Roaming\VoiceMeeterBananaDefault.xml"
-$vmDestConfig_IpEvo = "C:\Users\skype\AppData\Roaming\VoicemeeterBanana_LastSettings_IPEVO.xml"
-$vmDestConfig_S40 = "C:\Users\skype\AppData\Roaming\VoicemeeterBanana_LastSettings_S40.xml"
+$vmDestConfig_IpEvo = "C:\Users\Skype\Documents\VoicemeeterBanana_LastSettings_IPEVO.xml"
+$vmDestConfig_S40 = "C:\Users\Skype\Documents\VoicemeeterBanana_LastSettings_S40.xml"
 
 # Get file from Gihub
 $githubURL = "https://github.com/Plangloi/ESDC/"
